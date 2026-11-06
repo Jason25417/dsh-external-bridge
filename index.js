@@ -27,6 +27,23 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
+/** 与 dsh-composer-tweaks / dsh-session-bridge 共用的「agent 创建」标记文件。 */
+const SESSION_ORIGIN_FILE = path.join(process.env.DSH_HOME ?? path.join(os.homedir(), '.dsh'), 'session-origin.ndjson');
+
+/**
+ * 记录一个由外部 bridge 创建的 Session（best-effort，失败不影响建会话）。
+ * @param sessionId - 新建会话 id
+ */
+function markAgentSession(sessionId) {
+  if (typeof sessionId !== 'string' || sessionId === '') return;
+  try {
+    fs.mkdirSync(path.dirname(SESSION_ORIGIN_FILE), { recursive: true });
+    fs.appendFileSync(SESSION_ORIGIN_FILE, `${JSON.stringify({ sessionId, origin: 'external-bridge', at: new Date().toISOString() })}\n`, { mode: 0o600 });
+  } catch {
+    /* 标记失败不阻塞主流程 */
+  }
+}
+
 export const name = 'dsh-external-bridge';
 
 /** 桥的监听地址与端口：只绑 loopback，端口固定（被占就失败，不换端口）。 */
@@ -811,6 +828,7 @@ async function createSession(ctx, input, signal) {
     throw new BridgeError('internal', `sessionController.create 没有返回 sessionId（收到 ${JSON.stringify(created)}）`);
   }
   const sessionId = created.sessionId;
+  markAgentSession(sessionId);
 
   const payload = {
     ok: true,

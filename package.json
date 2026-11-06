@@ -1,7 +1,7 @@
 {
   "name": "dsh-external-bridge",
-  "version": "0.2.0",
-  "description": "Host-side HTTP bridge on 127.0.0.1:39217 that lets external processes create real DSH Desktop sessions, send prompts, read state and long-poll for replies. Zero runtime dependencies.",
+  "version": "0.2.1",
+  "description": "Host-side HTTP bridge on 127.0.0.1:39217 that lets external processes create real DSH Desktop sessions, send prompts, read state and long-poll for replies. Zero runtime dependencies; marks created Sessions as agent-origin for the sidebar.",
   "type": "module",
   "main": "index.js",
   "exports": {
