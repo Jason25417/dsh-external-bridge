@@ -1,0 +1,55 @@
+{
+  "name": "dsh-external-bridge",
+  "version": "0.2.0",
+  "description": "Host-side HTTP bridge on 127.0.0.1:39217 that lets external processes create real DSH Desktop sessions, send prompts, read state and long-poll for replies. Zero runtime dependencies.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=22",
+    "dsh": ">=0.2.1-rc.0 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "harness",
+    "http",
+    "bridge",
+    "local",
+    "session",
+    "automation",
+    "desktop"
+  ],
+  "license": "MIT",
+  "author": "Jason Tu",
+  "homepage": "https://github.com/Jason25417/dsh-external-bridge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jason25417/dsh-external-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jason25417/dsh-external-bridge/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

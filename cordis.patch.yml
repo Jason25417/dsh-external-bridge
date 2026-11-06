@@ -1,0 +1,12 @@
+# Bundle layer for dsh-external-bridge.
+#
+# This file is what `dsh.bundle.patch` in package.json points at. The row uses the
+# package name (not a path) so Node resolution finds the installed copy, whether the
+# package came from npm, a tarball, or a linked checkout.
+#
+# The bridge binds 127.0.0.1:39217 when the host starts. It has no settings of its
+# own: the port is fixed on purpose (a busy port fails loudly instead of silently
+# moving), and the token is regenerated on every host start.
+- insert:
+    - id: external-bridge
+      name: dsh-external-bridge
